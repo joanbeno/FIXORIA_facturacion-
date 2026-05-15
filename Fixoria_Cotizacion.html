@@ -465,6 +465,9 @@ function calcInvoice(invNum) {
   totalEl.textContent = fmt(final);
   sumEl.textContent = fmt(final);
 
+  const wordsEl = document.getElementById('words'+invNum);
+  if(wordsEl) wordsEl.textContent = 'Son: ' + numLetras(final);
+
   calcGrand();
 }
 
@@ -487,6 +490,9 @@ function calcGrand() {
   const grandOrigEl = document.getElementById('grand-orig');
 
   grandEl.textContent = fmt(grand) + ' COP';
+
+  const grandWordsEl = document.getElementById('grand-words');
+  if(grandWordsEl) grandWordsEl.textContent = 'Son: ' + numLetras(grand);
 
   if (grand < grandOrig) {
     grandOrigEl.textContent = fmt(grandOrig) + ' COP';
@@ -601,25 +607,6 @@ function addCotRow(n) {
   calcInvoice(n);
 }
 
-// Patch calcInvoice to also update words
-const _origCalcInvoice = calcInvoice;
-function calcInvoice(n) {
-  _origCalcInvoice(n);
-  const val = parseInt((document.getElementById('total'+n)||{}).textContent.replace(/[^0-9]/g,''))||0;
-  const el = document.getElementById('words'+n);
-  if(el) el.textContent = 'Son: '+numLetras(val);
-}
-function calcGrandWithWords() {
-  calcGrand();
-  const val = parseInt((document.getElementById('grand-total')||{}).textContent.replace(/[^0-9]/g,''))||0;
-  const el = document.getElementById('grand-words');
-  if(el) el.textContent = 'Son: '+numLetras(val);
-}
-// Override calcGrand calls
-const _origCalcGrand = calcGrand;
-calcGrand = function(){ _origCalcGrand(); calcGrandWithWords(); };
-
-[1,2,3].forEach(n => calcInvoice(n));
 </script>
 </body>
 </html>
