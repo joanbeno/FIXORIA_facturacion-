@@ -92,10 +92,6 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
 .total-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px}
 .total-row:last-of-type{border-bottom:none}
 .tkey{color:var(--text2)}.tval{font-family:'Space Grotesk',sans-serif;font-weight:500;color:var(--text)}
-.ret-row{color:var(--red)}.ret-row .tkey,.ret-row .tval{color:var(--red)}
-.ret-toggle{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);cursor:pointer;margin-top:8px;padding:6px 8px;border-radius:6px;border:1px dashed var(--border);width:100%}
-.ret-toggle input[type=checkbox]{accent-color:var(--red)}
-.ret-pct{width:36px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--red);border:none;border-bottom:1px solid #fac0c0;background:transparent;outline:none;text-align:center}
 
 /* BALANCE DUE */
 .balance-due{margin:0 24px;background:var(--carbon);border-radius:8px;padding:13px 20px;display:flex;justify-content:space-between;align-items:center}
@@ -117,6 +113,15 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
 .footer-subtag{font-size:9px;color:var(--silver);letter-spacing:1.2px;text-transform:uppercase;margin-top:4px}
 .footer-contact{text-align:right;font-size:11px;color:var(--text2);line-height:1.9}
 .footer-contact a{color:var(--blue);text-decoration:none}
+
+/* LETRAS */
+.bal-words{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.5px;color:var(--text2);text-transform:uppercase;text-align:right;padding:5px 24px 0;word-break:break-word}
+
+/* FIRMA PRINT */
+.firma-print{display:none}
+
+/* DETAIL PAGE */
+.detail-page{display:none}
 
 /* EDITABLE */
 [contenteditable]{outline:none;cursor:text;border-radius:3px;transition:background .15s;min-width:4px}
@@ -147,6 +152,7 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
   .footer-contact{text-align:left}
 }
 
+@page{size:A4 portrait;margin:12mm 15mm}
 @media print{
   body{background:white;padding:0}
   .toolbar{display:none}
@@ -155,8 +161,30 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
   .items-desktop{display:table!important}
   [contenteditable]:hover,[contenteditable]:focus{background:transparent;padding:0;margin:0}
   .price-in:hover,.price-in:focus{background:transparent}
-  .add-btn,.del-btn,.ret-toggle{display:none}
+  .add-btn,.del-btn{display:none}
   .pm-tag:not(.active){display:none}
+  .billing{grid-template-columns:1fr 1fr!important}
+  .lower-section{grid-template-columns:1fr 1fr!important}
+  .firma-print{display:grid!important;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px}
+  .firma-line{border-bottom:1px solid #999;height:40px;margin-bottom:8px}
+  .firma-name{font-family:'Space Grotesk',sans-serif;font-size:11px;color:#555}
+  .firma-role{font-size:10px;color:#888;margin-top:2px;text-transform:uppercase;letter-spacing:.8px}
+  .detail-page{display:block;page-break-before:always;padding:40px 48px;font-family:'Montserrat',sans-serif;font-size:13px}
+  .dp-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px}
+  .dp-wordmark{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:3px}
+  .dp-subtitle{font-family:'Space Grotesk',sans-serif;font-size:11px;color:#888}
+  .dp-divider{border:none;border-top:2px solid #B9000D;margin-bottom:24px}
+  .dp-block{margin-top:24px}
+  .dp-block-title{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#B9000D;border-bottom:1px solid #fac0c0;padding-bottom:6px;margin-bottom:10px}
+  .dp-table{width:100%;border-collapse:collapse;font-size:12px}
+  .dp-table td{padding:6px 8px;border-bottom:1px solid #f0f0f4;vertical-align:top}
+  .dp-table td:last-child{text-align:right;white-space:nowrap;width:30%}
+  .dp-table tr:nth-child(even) td{background:#fafafa}
+  .dp-table tr.subtotal td{font-family:'Space Grotesk',sans-serif;font-weight:700;border-top:1.5px solid #e0e0e8;border-bottom:none;background:#f5f5f7}
+  .dp-footer{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:14px;border-top:1px solid #ccc}
+  .dp-total-label{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:4px}
+  .dp-total-val{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#B9000D}
+  .dp-legal{font-size:11px;color:#888;text-align:right;max-width:300px;line-height:1.6}
 }
 </style>
 </head>
@@ -165,6 +193,7 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
 <div class="toolbar">
   <div class="toolbar-note"><span>Toca cualquier campo</span> para editar · Totales automáticos</div>
   <div class="toolbar-actions">
+    <a href="Fixoria_Cotizacion.html" class="btn btn-ghost">← Cotización</a>
     <button class="btn btn-ghost" onclick="if(confirm('¿Limpiar para nueva factura?'))location.reload()">Limpiar</button>
     <button class="btn btn-primary" onclick="window.print()">Imprimir / PDF</button>
   </div>
@@ -178,7 +207,7 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
       <div class="tagline">Consultoría y Desarrollo de Agentes e IA</div>
     </div>
     <div class="inv-title">
-      <h1>Factura de Servicios</h1>
+      <h1>Cuenta de Cobro</h1>
       <div class="inv-num-row">N° <span class="nv" contenteditable="true">FACT-2025-001</span></div>
     </div>
   </div>
@@ -274,10 +303,6 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
   <div class="totals-section">
     <div class="totals-box">
       <div class="total-row"><span class="tkey">Subtotal</span><span class="tval" id="sub-v">$0</span></div>
-      <div class="total-row ret-row" id="ret-row" style="display:none">
-        <span class="tkey">Retención en la fuente (<span id="ret-d">11</span>%)</span>
-        <span class="tval" id="ret-v">—$0</span>
-      </div>
       <div class="total-row" style="font-weight:600">
         <span class="tkey" style="color:var(--text);font-weight:600">Total</span>
         <span class="tval" id="tot-v" style="font-size:15px;color:var(--carbon)">$0</span>
@@ -286,11 +311,6 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
         <span class="tkey">Pagado</span>
         <span class="tval"><input class="price-in" type="number" value="0" id="paid-in"></span>
       </div>
-      <label class="ret-toggle">
-        <input type="checkbox" id="ret-chk" onchange="calc()">
-        Aplicar retención &nbsp;
-        <input class="ret-pct" type="number" value="11" id="ret-pct" min="0" max="100" onchange="calc()">%
-      </label>
     </div>
   </div>
 
@@ -298,6 +318,7 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
     <span class="bd-label">Saldo por pagar</span>
     <span class="bd-val" id="bal-v">$0</span>
   </div>
+  <div class="bal-words" id="bal-words">Son: cero pesos m/cte</div>
 
   <div class="lower-section">
     <div>
@@ -312,7 +333,7 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
     </div>
     <div>
       <div class="lb-title">Notas y observaciones</div>
-      <div class="lb-body" contenteditable="true">Servicios profesionales de consultoría tecnológica y académica. El prestador no es responsable de IVA según el Art. 437 del E.T. Conserve este documento como soporte de pago.</div>
+      <div class="lb-body" contenteditable="true">Cuenta de cobro — Persona natural prestadora de servicios independientes. No responsable de IVA según Art. 437 E.T. Pago entre personas naturales, no aplica retención en la fuente.</div>
     </div>
   </div>
 
@@ -328,27 +349,43 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
     </div>
   </div>
 
+  <div class="firma-print">
+    <div>
+      <div class="firma-line"></div>
+      <div class="firma-name">Joan Beno / Fixoria / C.C. 1.061.804.637</div>
+      <div class="firma-role">Firma del prestador</div>
+    </div>
+    <div>
+      <div class="firma-line"></div>
+      <div class="firma-name">Nombre / Documento</div>
+      <div class="firma-role">Firma y sello del receptor</div>
+    </div>
+  </div>
+
 </div>
 
 <script>
 const fmt = n => '$ ' + Math.round(n).toLocaleString('es-CO');
 const isMobile = () => window.innerWidth <= 620;
 
+const _u = ['','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez','once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve'];
+const _d = ['','','veinte','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
+function _centenas(n){if(n===100)return 'cien';const c=Math.floor(n/100),r=n%100;const cv=['','ciento','doscientos','trescientos','cuatrocientos','quinientos','seiscientos','setecientos','ochocientos','novecientos'];return(c?cv[c]+' ':'')+_decenas(r);}
+function _decenas(n){if(n<20)return _u[n];const d=Math.floor(n/10),u=n%10;return _d[d]+(u?' y '+_u[u]:'');}
+function _numBase(n){if(n<100)return n<20?_u[n]:_decenas(n);return _centenas(n);}
+function numLetras(n){n=Math.round(n);if(n===0)return 'cero pesos m/cte';let r='';const mills=Math.floor(n/1000000),miles=Math.floor((n%1000000)/1000),cents=n%1000;if(mills)r+=(mills===1?'un millón':_numBase(mills)+' millones')+' ';if(miles)r+=(miles===1?'mil':_numBase(miles)+' mil')+' ';if(cents)r+=_centenas(cents)+' ';return r.trim()+' pesos m/cte';}
+
 function calc() {
   const prices = [...document.querySelectorAll('.item-price')].filter(p => p.offsetParent !== null);
   let sub = 0;
   prices.forEach(p => sub += parseFloat(p.value)||0);
-  const retOn = document.getElementById('ret-chk').checked;
-  const retPct = parseFloat(document.getElementById('ret-pct').value)||0;
-  const retAmt = retOn ? sub*(retPct/100) : 0;
-  const tot = sub - retAmt;
+  const tot = sub;
   const paid = parseFloat(document.getElementById('paid-in').value)||0;
+  const bal = tot - paid;
   document.getElementById('sub-v').textContent = fmt(sub);
   document.getElementById('tot-v').textContent = fmt(tot);
-  document.getElementById('bal-v').textContent = fmt(tot - paid);
-  document.getElementById('ret-row').style.display = retOn ? 'flex' : 'none';
-  document.getElementById('ret-d').textContent = retPct;
-  document.getElementById('ret-v').textContent = '— ' + fmt(retAmt);
+  document.getElementById('bal-v').textContent = fmt(bal);
+  document.getElementById('bal-words').textContent = 'Son: ' + numLetras(bal);
 }
 
 function addItem() {
@@ -410,5 +447,62 @@ function setPM(el) {
 document.querySelectorAll('.item-price, #paid-in').forEach(i => i.addEventListener('input', calc));
 calc();
 </script>
+
+<div class="detail-page">
+  <div class="dp-header">
+    <div class="dp-wordmark">
+      <span style="color:#8A8A95">F</span><span style="color:#8A8A95">I</span><span style="color:#B9000D">X</span><span style="color:#8A8A95">O</span><span style="color:#8A8A95">R</span><span style="color:#3D6A9E">I</span><span style="color:#3D6A9E">A</span>
+    </div>
+    <div class="dp-subtitle">Hoja de detalle — Desglose por componente</div>
+  </div>
+  <hr class="dp-divider">
+
+  <div class="dp-block">
+    <div class="dp-block-title">Componente 01 — Desarrollo web</div>
+    <table class="dp-table">
+      <tr><td>Mockup inicial — pantalla diagnóstico y facilitador</td><td>$700.000</td></tr>
+      <tr><td>Implementación Stage 1 y Stage 2 funcional</td><td>$800.000</td></tr>
+      <tr><td>Motor de recomendaciones y código SAG-XXXX</td><td>$750.000</td></tr>
+      <tr><td>Integración backend Google Sheets y AppScript</td><td>$450.000</td></tr>
+      <tr><td>Dashboard del facilitador funcional</td><td>$400.000</td></tr>
+      <tr><td>Guía personalizada con lookup por código</td><td>$300.000</td></tr>
+      <tr><td>Botón WhatsApp y funcionalidades UI</td><td>$100.000</td></tr>
+      <tr><td>Despliegue Vercel y GitHub</td><td>$150.000</td></tr>
+      <tr class="subtotal"><td>Subtotal del componente</td><td>$3.650.000</td></tr>
+    </table>
+  </div>
+
+  <div class="dp-block">
+    <div class="dp-block-title">Componente 02 — Consultoría académica</div>
+    <table class="dp-table">
+      <tr><td>Complemento y apoyo OE2 — segunda mitad del instrumento</td><td>$400.000</td></tr>
+      <tr><td>Apoyo capítulo 3 metodología</td><td>$350.000</td></tr>
+      <tr><td>Diseño preguntas encuesta y entrevista</td><td>$250.000</td></tr>
+      <tr><td>Diagramas técnicos del sistema</td><td>$80.000</td></tr>
+      <tr><td>Reuniones de validación — 2 sesiones</td><td>$180.000</td></tr>
+      <tr class="subtotal"><td>Subtotal del componente</td><td>$1.260.000</td></tr>
+    </table>
+  </div>
+
+  <div class="dp-block">
+    <div class="dp-block-title">Componente 03 — Lógica e instrumento</div>
+    <table class="dp-table">
+      <tr><td>Diseño lógica de scoring multidimensional</td><td>$450.000</td></tr>
+      <tr><td>Construcción repositorio de recomendaciones 96+ bloques</td><td>$800.000</td></tr>
+      <tr><td>Diseño preguntas Stage 1 y Stage 2</td><td>$350.000</td></tr>
+      <tr><td>Adaptación hallazgos OE2 al motor de recomendaciones</td><td>$300.000</td></tr>
+      <tr class="subtotal"><td>Subtotal del componente</td><td>$1.900.000</td></tr>
+    </table>
+  </div>
+
+  <div class="dp-footer">
+    <div>
+      <div class="dp-total-label">Total general</div>
+      <div class="dp-total-val">$6.810.000 COP</div>
+    </div>
+    <div class="dp-legal">Cuenta de cobro — Persona natural prestadora de servicios independientes. No responsable de IVA Art. 437 E.T.</div>
+  </div>
+</div>
+
 </body>
 </html>

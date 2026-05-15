@@ -127,6 +127,41 @@ tbody tr:last-child td{border-bottom:none}
 .footer-contact strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px}
 .footer-contact a{color:var(--blue);text-decoration:none}
 
+/* TOOLBAR */
+.cot-toolbar{max-width:860px;margin:0 auto 14px;background:var(--carbon);border-radius:10px;padding:11px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.cot-toolbar-note{font-family:'Space Grotesk',sans-serif;font-size:11px;color:rgba(255,255,255,.4)}
+.cot-toolbar-note span{color:rgba(255,255,255,.7)}
+.cot-nav-btn{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:7px 15px;border-radius:6px;background:var(--red);color:#fff;text-decoration:none;white-space:nowrap;flex-shrink:0}
+.cot-nav-btn:hover{background:#9e000b}
+
+/* EDITABLE ROWS */
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.factura table{min-width:500px}
+.cot-del-btn{background:none;border:none;cursor:pointer;color:#ccc;padding:3px 6px;border-radius:4px;font-size:16px;line-height:1;flex-shrink:0}
+.cot-del-btn:hover{color:var(--red);background:#fdeaea}
+.cot-add-btn{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:11px;color:var(--blue);cursor:pointer;background:none;border:1px dashed rgba(30,58,95,.3);border-radius:6px;padding:5px 14px;font-family:'Montserrat',sans-serif;transition:all .15s}
+.cot-add-btn:hover{background:rgba(30,58,95,.05)}
+[contenteditable]{outline:none;cursor:text;border-radius:3px;transition:background .15s}
+[contenteditable]:hover{background:rgba(30,58,95,.04)}
+[contenteditable]:focus{background:rgba(30,58,95,.07);padding:1px 3px;margin:-1px -3px}
+
+/* ALCANCE */
+.alcance{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.alcance-col{border-radius:8px;padding:16px 20px}
+.alcance-col.inc{background:#f0faf5;border-left:3px solid #00875a}
+.alcance-col.out{background:#fdf0f0;border-left:3px solid #B9000D}
+.alcance-title{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.alcance-col.inc .alcance-title{color:#00875a}
+.alcance-col.out .alcance-title{color:#B9000D}
+.alcance-list{list-style:none;padding:0;margin:0}
+.alcance-list li{font-size:12px;line-height:1.9;color:var(--text2);padding-left:16px;position:relative}
+.alcance-list li::before{content:"—";position:absolute;left:0;color:var(--silver)}
+
+/* LETRAS */
+.ft-words{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.5px;color:var(--text2);text-transform:uppercase;text-align:right;margin-top:4px}
+.res-words{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:.5px;color:rgba(160,160,168,.35);text-transform:uppercase;margin-top:6px}
+
+@page{size:A4 portrait;margin:12mm 15mm}
 @media print{
   body{background:white;padding:16px}
   .factura,.cliente-block,.condiciones,.footer{box-shadow:none;border:1px solid #e0e0e8}
@@ -135,10 +170,18 @@ tbody tr:last-child td{border-bottom:none}
   .page{gap:20px}
   .brand-header,.resumen{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .btn-emitir{display:none}
+  .cot-toolbar{display:none}
+  .cot-add-btn,.cot-del-btn{display:none}
+  .cliente-block{grid-template-columns:1fr 1fr!important}
+  .alcance{grid-template-columns:1fr 1fr!important}
 }
 </style>
 </head>
 <body>
+<div class="cot-toolbar">
+  <div class="cot-toolbar-note"><span>Toca cualquier precio</span> para editar · Agrega o elimina ítems</div>
+  <a href="Fixoria_Factura.html" class="cot-nav-btn">Emitir cuenta de cobro →</a>
+</div>
 <div class="page">
 
 <!-- HEADER -->
@@ -150,7 +193,7 @@ tbody tr:last-child td{border-bottom:none}
     <div class="tagline">Consultoría y Desarrollo de Agentes e IA</div>
   </div>
   <div class="hdr-right">
-    <div class="hdr-doc">Cotización de Servicios</div>
+    <div class="hdr-doc">Cuenta de Cobro — Cotización de Servicios</div>
     <div class="hdr-ref">COT · SAGEST · 2025 · 001</div>
     <div class="hdr-date">Mayo 2025</div>
     <div class="hdr-contact">
@@ -326,7 +369,39 @@ tbody tr:last-child td{border-bottom:none}
       <span class="rtv" id="grand-total">$6.810.000 COP</span>
     </span>
   </div>
-  <a class="btn-emitir" href="Fixoria_Factura.html" style="display:inline-block;background:#B9000D;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:10px 24px;border-radius:6px;text-decoration:none;margin-top:16px">Emitir factura →</a>
+  <a class="btn-emitir" href="Fixoria_Factura.html" style="display:inline-block;background:#B9000D;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:10px 24px;border-radius:6px;text-decoration:none;margin-top:16px">Emitir cuenta de cobro →</a>
+</div>
+
+<!-- ALCANCE -->
+<div class="condiciones">
+  <div class="cond-title">Alcance del proyecto</div>
+  <div class="alcance">
+    <div class="alcance-col inc">
+      <div class="alcance-title">Incluido</div>
+      <ul class="alcance-list">
+        <li>Sistema SAGEST funcional desplegado en Vercel</li>
+        <li>Integración Google Sheets + AppScript</li>
+        <li>Dashboard del facilitador con toggle real y demo</li>
+        <li>Guía personalizada por código SAG-XXXX</li>
+        <li>Motor de recomendaciones con 96+ bloques</li>
+        <li>Dos rondas de ajustes por componente</li>
+        <li>30 días de soporte técnico post-entrega</li>
+        <li>Repositorio GitHub con acceso al cliente</li>
+      </ul>
+    </div>
+    <div class="alcance-col out">
+      <div class="alcance-title">Fuera del alcance</div>
+      <ul class="alcance-list">
+        <li>Dominio propio o hosting pagado</li>
+        <li>Mantenimiento continuo después de 30 días</li>
+        <li>Cambios estructurales al instrumento académico</li>
+        <li>Exportación a Excel, SPSS u otros formatos</li>
+        <li>Integraciones con sistemas institucionales de ICESI</li>
+        <li>Capacitaciones adicionales a las dos sesiones incluidas</li>
+        <li>Desarrollo de nuevas dimensiones o módulos no contemplados</li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <!-- CONDICIONES -->
@@ -338,6 +413,7 @@ tbody tr:last-child td{border-bottom:none}
     <div class="cond-item"><span class="cond-dash">—</span><span><strong>Factura 003</strong> — Exigible antes de la sustentación de tesis. El sistema permanece activo condicionado a esta liquidación.</span></div>
     <div class="cond-item"><span class="cond-dash">—</span><span><strong>Ajustes menores</strong> — Hasta 2 rondas de correcciones sin costo adicional por factura.</span></div>
     <div class="cond-item"><span class="cond-dash">—</span><span><strong>Soporte técnico</strong> — 30 días incluidos en Factura 001. Extensiones bajo nueva cotización.</span></div>
+    <div class="cond-item"><span class="cond-dash">—</span><span>Cuenta de cobro entre personas naturales. No responsable de IVA según Art. 437 E.T. No aplica retención en la fuente.</span></div>
   </div>
 </div>
 
@@ -434,11 +510,116 @@ function calcGrand() {
   calcInvoice(n);
 });
 
-// Format inputs on load - show COP formatted
+// Format inputs on load
 document.querySelectorAll('.price-input').forEach(input => {
-  const val = parseFloat(input.value);
-  input.setAttribute('data-orig', val);
+  input.setAttribute('data-orig', parseFloat(input.value));
 });
+
+// ── NÚMERO A LETRAS ──────────────────────────────────────────────
+const _u = ['','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez','once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve'];
+const _d = ['','','veinte','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
+function _centenas(n){
+  if(n===100) return 'cien';
+  const c=Math.floor(n/100),r=n%100;
+  const cv=['','ciento','doscientos','trescientos','cuatrocientos','quinientos','seiscientos','setecientos','ochocientos','novecientos'];
+  return (c?cv[c]+' ':'') + _decenas(r);
+}
+function _decenas(n){
+  if(n<20) return _u[n];
+  const d=Math.floor(n/10),u=n%10;
+  return _d[d]+(u?' y '+_u[u]:'');
+}
+function numLetras(n){
+  n=Math.round(n);
+  if(n===0) return 'cero pesos m/cte';
+  let r='';
+  const mills=Math.floor(n/1000000),miles=Math.floor((n%1000000)/1000),cents=n%1000;
+  if(mills){
+    r+=(mills===1?'un millón':_numBase(mills)+' millones')+' ';
+  }
+  if(miles){
+    r+=(miles===1?'mil':_numBase(miles)+' mil')+' ';
+  }
+  if(cents) r+=_centenas(cents)+' ';
+  return r.trim()+' pesos m/cte';
+}
+function _numBase(n){
+  if(n<100) return n<20?_u[n]:_decenas(n);
+  return _centenas(n);
+}
+
+// ── INIT EDITABLE + ADD/DEL ──────────────────────────────────────
+document.querySelectorAll('.factura').forEach(fac => {
+  const n = parseInt(fac.dataset.invoice);
+  // Scroll wrapper
+  fac.querySelectorAll('.fb table').forEach(table => {
+    const wrap = document.createElement('div');
+    wrap.className = 'table-scroll';
+    table.parentNode.insertBefore(wrap, table);
+    wrap.appendChild(table);
+    // Add header del column
+    table.querySelector('thead tr').insertAdjacentHTML('beforeend','<th style="width:32px"></th>');
+    // Make rows editable and add del button
+    table.querySelectorAll('tbody tr').forEach(tr => {
+      tr.cells[0].contentEditable = 'true';
+      tr.insertAdjacentHTML('beforeend','<td><button class="cot-del-btn" onclick="delCotRow(this,'+n+')">×</button></td>');
+    });
+  });
+  // Add-row button
+  fac.querySelector('.ft-row').insertAdjacentHTML('beforebegin',
+    '<button class="cot-add-btn" onclick="addCotRow('+n+')">+ Agregar ítem</button>');
+  // Words label
+  const words = document.createElement('div');
+  words.className = 'ft-words';
+  words.id = 'words'+n;
+  fac.querySelector('.ft-row').after(words);
+});
+
+// Grand total words
+const grandWords = document.createElement('div');
+grandWords.className = 'res-words';
+grandWords.id = 'grand-words';
+document.getElementById('grand-total').closest('.res-total').after(grandWords);
+
+function delCotRow(btn, n) {
+  btn.closest('tr').remove();
+  calcInvoice(n);
+}
+
+function addCotRow(n) {
+  const tbody = document.querySelector(`[data-invoice="${n}"] tbody`);
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td contenteditable="true">Nuevo ítem<span class="in" contenteditable="true">Descripción del servicio</span></td>
+    <td><span class="tag-a">Adicional</span></td>
+    <td class="price-cell"><input class="price-input" data-inv="${n}" value="0" type="number"></td>
+    <td><button class="cot-del-btn" onclick="delCotRow(this,${n})">×</button></td>`;
+  tbody.appendChild(tr);
+  const inp = tr.querySelector('.price-input');
+  inp.addEventListener('blur', () => calcInvoice(n));
+  inp.addEventListener('input', () => calcInvoice(n));
+  tr.querySelector('[contenteditable]').focus();
+  calcInvoice(n);
+}
+
+// Patch calcInvoice to also update words
+const _origCalcInvoice = calcInvoice;
+function calcInvoice(n) {
+  _origCalcInvoice(n);
+  const val = parseInt((document.getElementById('total'+n)||{}).textContent.replace(/[^0-9]/g,''))||0;
+  const el = document.getElementById('words'+n);
+  if(el) el.textContent = 'Son: '+numLetras(val);
+}
+function calcGrandWithWords() {
+  calcGrand();
+  const val = parseInt((document.getElementById('grand-total')||{}).textContent.replace(/[^0-9]/g,''))||0;
+  const el = document.getElementById('grand-words');
+  if(el) el.textContent = 'Son: '+numLetras(val);
+}
+// Override calcGrand calls
+const _origCalcGrand = calcGrand;
+calcGrand = function(){ _origCalcGrand(); calcGrandWithWords(); };
+
+[1,2,3].forEach(n => calcInvoice(n));
 </script>
 </body>
 </html>
