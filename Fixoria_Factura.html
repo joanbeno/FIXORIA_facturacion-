@@ -127,10 +127,23 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
 .dp-toggle-bar.open .dp-toggle-icon{transform:rotate(180deg)}
 
 /* DETAIL PAGE */
-.detail-page{display:none}
-@media screen{
-  .detail-page{background:var(--white);border-radius:12px;max-width:860px;margin:8px auto 24px;padding:32px 40px;box-shadow:0 1px 4px rgba(0,0,0,.05),0 6px 20px rgba(0,0,0,.06)}
-}
+.detail-page{display:none;background:var(--white);border-radius:12px;max-width:860px;margin:8px auto 24px;padding:32px 40px;box-shadow:0 1px 4px rgba(0,0,0,.05),0 6px 20px rgba(0,0,0,.06);font-family:'Montserrat',sans-serif;font-size:13px}
+.detail-page.dp-open{display:block}
+.dp-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.dp-wordmark{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:3px}
+.dp-subtitle{font-family:'Space Grotesk',sans-serif;font-size:11px;color:#888}
+.dp-divider{border:none;border-top:2px solid #B9000D;margin-bottom:24px;margin-top:8px}
+.dp-block{margin-top:24px}
+.dp-block-title{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#B9000D;border-bottom:1px solid #fac0c0;padding-bottom:6px;margin-bottom:10px}
+.dp-table{width:100%;border-collapse:collapse;font-size:12px}
+.dp-table td{padding:7px 10px;border-bottom:1px solid #f0f0f4;vertical-align:top;word-break:break-word}
+.dp-table td:last-child{text-align:right;white-space:nowrap;width:140px}
+.dp-table tr:nth-child(even) td{background:#fafafa}
+.dp-table tr.subtotal td{font-family:'Space Grotesk',sans-serif;font-weight:700;border-top:1.5px solid #e0e0e8;border-bottom:none;background:#f5f5f7}
+.dp-footer{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:14px;border-top:1px solid #ccc;flex-wrap:wrap;gap:12px}
+.dp-total-label{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:4px}
+.dp-total-val{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#B9000D}
+.dp-legal{font-size:11px;color:#888;text-align:right;max-width:300px;line-height:1.6}
 
 /* EDITABLE */
 [contenteditable]{outline:none;cursor:text;border-radius:3px;transition:background .15s;min-width:4px}
@@ -179,22 +192,7 @@ body{font-family:'Montserrat',sans-serif;background:#e0e0e4;color:var(--text);pa
   .firma-name{font-family:'Space Grotesk',sans-serif;font-size:11px;color:#555}
   .firma-role{font-size:10px;color:#888;margin-top:2px;text-transform:uppercase;letter-spacing:.8px}
   .dp-toggle-bar{display:none!important}
-  .detail-page{display:block!important;page-break-before:always;padding:40px 48px;font-family:'Montserrat',sans-serif;font-size:13px;box-shadow:none;border-radius:0;margin:0}
-  .dp-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px}
-  .dp-wordmark{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:3px}
-  .dp-subtitle{font-family:'Space Grotesk',sans-serif;font-size:11px;color:#888}
-  .dp-divider{border:none;border-top:2px solid #B9000D;margin-bottom:24px}
-  .dp-block{margin-top:24px}
-  .dp-block-title{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#B9000D;border-bottom:1px solid #fac0c0;padding-bottom:6px;margin-bottom:10px}
-  .dp-table{width:100%;border-collapse:collapse;font-size:12px}
-  .dp-table td{padding:6px 8px;border-bottom:1px solid #f0f0f4;vertical-align:top}
-  .dp-table td:last-child{text-align:right;white-space:nowrap;width:30%}
-  .dp-table tr:nth-child(even) td{background:#fafafa}
-  .dp-table tr.subtotal td{font-family:'Space Grotesk',sans-serif;font-weight:700;border-top:1.5px solid #e0e0e8;border-bottom:none;background:#f5f5f7}
-  .dp-footer{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:14px;border-top:1px solid #ccc}
-  .dp-total-label{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:4px}
-  .dp-total-val{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#B9000D}
-  .dp-legal{font-size:11px;color:#888;text-align:right;max-width:300px;line-height:1.6}
+  .detail-page{display:block!important;page-break-before:always;padding:40px 48px;box-shadow:none!important;border-radius:0!important;margin:0!important}
 }
 </style>
 </head>
@@ -465,9 +463,8 @@ calc();
 function toggleDetail() {
   const dp = document.getElementById('detail-page');
   const bar = document.getElementById('dp-toggle-bar');
-  const open = dp.style.display === 'block';
-  dp.style.display = open ? 'none' : 'block';
-  bar.classList.toggle('open', !open);
+  dp.classList.toggle('dp-open');
+  bar.classList.toggle('open');
 }
 
 // Hacer editables las celdas del detalle
