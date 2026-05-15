@@ -437,6 +437,14 @@ tbody tr:last-child td{border-bottom:none}
 <script>
 const fmt = n => '$' + Math.round(n).toLocaleString('es-CO');
 
+// ── NÚMERO A LETRAS ──────────────────────────────────────────────
+const _u = ['','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez','once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve'];
+const _d = ['','','veinte','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
+function _centenas(n){if(n===100)return 'cien';const c=Math.floor(n/100),r=n%100;const cv=['','ciento','doscientos','trescientos','cuatrocientos','quinientos','seiscientos','setecientos','ochocientos','novecientos'];return(c?cv[c]+' ':'')+_decenas(r);}
+function _decenas(n){if(n<20)return _u[n];const d=Math.floor(n/10),u=n%10;return _d[d]+(u?' y '+_u[u]:'');}
+function _numBase(n){if(n<100)return n<20?_u[n]:_decenas(n);return _centenas(n);}
+function numLetras(n){n=Math.round(n);if(n===0)return 'cero pesos m/cte';let r='';const mills=Math.floor(n/1000000),miles=Math.floor((n%1000000)/1000),cents=n%1000;if(mills)r+=(mills===1?'un millón':_numBase(mills)+' millones')+' ';if(miles)r+=(miles===1?'mil':_numBase(miles)+' mil')+' ';if(cents)r+=_centenas(cents)+' ';return r.trim()+' pesos m/cte';}
+
 function calcInvoice(invNum) {
   const inputs = document.querySelectorAll(`.price-input[data-inv="${invNum}"]`);
   let subtotal = 0;
@@ -521,39 +529,6 @@ document.querySelectorAll('.price-input').forEach(input => {
   input.setAttribute('data-orig', parseFloat(input.value));
 });
 
-// ── NÚMERO A LETRAS ──────────────────────────────────────────────
-const _u = ['','uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve','diez','once','doce','trece','catorce','quince','dieciséis','diecisiete','dieciocho','diecinueve'];
-const _d = ['','','veinte','treinta','cuarenta','cincuenta','sesenta','setenta','ochenta','noventa'];
-function _centenas(n){
-  if(n===100) return 'cien';
-  const c=Math.floor(n/100),r=n%100;
-  const cv=['','ciento','doscientos','trescientos','cuatrocientos','quinientos','seiscientos','setecientos','ochocientos','novecientos'];
-  return (c?cv[c]+' ':'') + _decenas(r);
-}
-function _decenas(n){
-  if(n<20) return _u[n];
-  const d=Math.floor(n/10),u=n%10;
-  return _d[d]+(u?' y '+_u[u]:'');
-}
-function numLetras(n){
-  n=Math.round(n);
-  if(n===0) return 'cero pesos m/cte';
-  let r='';
-  const mills=Math.floor(n/1000000),miles=Math.floor((n%1000000)/1000),cents=n%1000;
-  if(mills){
-    r+=(mills===1?'un millón':_numBase(mills)+' millones')+' ';
-  }
-  if(miles){
-    r+=(miles===1?'mil':_numBase(miles)+' mil')+' ';
-  }
-  if(cents) r+=_centenas(cents)+' ';
-  return r.trim()+' pesos m/cte';
-}
-function _numBase(n){
-  if(n<100) return n<20?_u[n]:_decenas(n);
-  return _centenas(n);
-}
-
 // ── INIT EDITABLE + ADD/DEL ──────────────────────────────────────
 document.querySelectorAll('.factura').forEach(fac => {
   const n = parseInt(fac.dataset.invoice);
@@ -586,6 +561,9 @@ const grandWords = document.createElement('div');
 grandWords.className = 'res-words';
 grandWords.id = 'grand-words';
 document.getElementById('grand-total').closest('.res-total').after(grandWords);
+
+// Poblar palabras ahora que los divs existen
+[1,2,3].forEach(n => calcInvoice(n));
 
 function delCotRow(btn, n) {
   btn.closest('tr').remove();
