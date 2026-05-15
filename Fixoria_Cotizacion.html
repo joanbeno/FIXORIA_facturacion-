@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotización SAGEST — Fixoria</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#B9000D;--blue:#1E3A5F;--silver:#A0A0A8;
+  --carbon:#0D0F14;--text:#16161e;--text2:#666;
+  --border:#e4e4ec;--bg:#f5f5f7;--white:#fff;
+}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);padding:40px 20px;font-size:13px;line-height:1.65;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+.page{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+
+/* ── HEADER ── */
+.brand-header{background:var(--carbon);padding:26px 40px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--red)}
+.wordmark{display:flex;align-items:baseline;gap:1px;font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;letter-spacing:4px;line-height:1}
+.wordmark .l-silver{color:var(--silver)}
+.wordmark .l-red{color:var(--red)}
+.wordmark .l-blue{color:#4A7BAF}
+.tagline{font-family:'Space Grotesk',sans-serif;font-size:8.5px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(160,160,168,.4);margin-top:7px}
+.hdr-right{text-align:right}
+.hdr-doc{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:rgba(255,255,255,.85)}
+.hdr-ref{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1px;color:rgba(160,160,168,.45);margin-top:4px}
+.hdr-date{font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--red);font-weight:600;margin-top:6px}
+.hdr-contact{margin-top:8px;display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+.hdr-contact span{font-size:11px;color:rgba(160,160,168,.5);display:flex;align-items:center;gap:6px}
+.hdr-contact svg{opacity:.6}
+
+/* ── CLIENTE ── */
+.cliente-block{background:var(--white);border-radius:10px;padding:22px 30px;border-left:4px solid var(--blue);display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+.cb-title{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text2);grid-column:1/-1;border-bottom:1px solid var(--border);padding-bottom:10px}
+.cb-row{display:flex;flex-direction:column;gap:2px}
+.cb-label{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.7px}
+.cb-value{font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:600;color:var(--text)}
+.cb-value.accent{color:var(--blue);font-size:16px}
+
+/* ── NOTA ── */
+.nota{background:var(--white);border-radius:8px;padding:14px 22px;border-left:3px solid var(--silver);font-size:12px;color:var(--text2);font-style:italic;line-height:1.7}
+.nota strong{color:var(--text);font-style:normal;font-weight:600}
+
+/* ── FACTURA ── */
+.factura{background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05),0 6px 20px rgba(0,0,0,.06)}
+.fh{padding:18px 30px 14px;display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--border)}
+.fh.f1{border-top:4px solid var(--red)}
+.fh.f2{border-top:4px solid var(--blue)}
+.fh.f3{border-top:4px solid #8B5E2A}
+.fn{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);margin-bottom:4px}
+.ftitle{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--carbon)}
+.fdesc{font-size:11.5px;color:var(--text2);margin-top:3px}
+.fbadge{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;padding:3px 11px;border-radius:20px;margin-top:7px}
+.rb{background:#fdeaea;color:var(--red)}.bb{background:#e8edf5;color:var(--blue)}.ob{background:#f5ece0;color:#7a4a18}
+
+/* DISCOUNT CONTROL */
+.disc-wrap{display:flex;align-items:center;gap:10px;margin-top:4px}
+.disc-label{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text2)}
+.disc-input{width:52px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--red);border:1px solid #fac0c0;border-radius:6px;padding:3px 6px;text-align:center;background:#fff9f9;outline:none}
+.disc-input:focus{border-color:var(--red);background:#fff}
+.disc-badge{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:600;color:var(--red);background:#fdeaea;padding:3px 9px;border-radius:10px;display:none}
+
+.fb{padding:6px 30px 24px}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+thead th{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);padding:9px 10px;text-align:left;background:var(--bg);border-bottom:1px solid var(--border)}
+thead th:last-child{text-align:right}
+thead th:nth-last-child(2){text-align:center;width:80px}
+tbody td{padding:11px 10px;font-size:13px;border-bottom:1px solid #f2f2f5;vertical-align:top}
+tbody td:nth-last-child(2){text-align:center}
+tbody td:last-child{text-align:right;font-family:'Space Grotesk',sans-serif;font-weight:600;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+.in{display:block;font-size:10.5px;color:var(--text2);margin-top:2px}
+.tag-a{display:inline-block;font-size:8.5px;font-weight:600;padding:2px 7px;border-radius:10px;background:#fdeaea;color:var(--red);text-transform:uppercase;letter-spacing:.4px}
+.tag-b{display:inline-block;font-size:8.5px;font-weight:600;padding:2px 7px;border-radius:10px;background:#e8edf5;color:var(--blue);text-transform:uppercase;letter-spacing:.4px}
+
+/* EDITABLE PRICE */
+.price-cell{font-family:'Space Grotesk',sans-serif;font-weight:600}
+.price-input{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--text);border:1px solid transparent;border-radius:5px;padding:2px 6px;text-align:right;width:110px;background:transparent;outline:none;cursor:pointer;transition:all .2s}
+.price-input:hover{border-color:var(--border);background:var(--bg)}
+.price-input:focus{border-color:var(--blue);background:#f0f4fa;cursor:text}
+.price-orig{font-size:10px;color:var(--text2);text-decoration:line-through;display:none;text-align:right;margin-top:1px}
+
+.subtotal-row{background:#fafafa}
+.subtotal-label{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:600;color:var(--text2);letter-spacing:.5px}
+.subtotal-val{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--text)}
+.discount-row{background:#fff9f9}
+.discount-label{font-size:11px;color:var(--red)}
+.discount-val{font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--red)}
+
+.ft-row{margin-top:14px;padding-top:14px;border-top:1.5px solid var(--border);display:flex;justify-content:flex-end;align-items:baseline;gap:16px}
+.ft-label{font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--text2)}
+.ft-val{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700}
+.fv-red{color:var(--red)}.fv-blue{color:var(--blue)}.fv-brown{color:#7a4a18}
+.ft-orig{font-size:13px;color:var(--text2);text-decoration:line-through;margin-right:4px;display:none}
+
+/* RESUMEN */
+.resumen{background:var(--carbon);border-radius:12px;padding:30px 36px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+.res-title{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(160,160,168,.4);margin-bottom:20px}
+.res-rows{display:flex;flex-direction:column;margin-bottom:22px}
+.res-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.res-row:last-child{border-bottom:none}
+.rl{font-size:13px;color:rgba(160,160,168,.6);font-family:'Space Grotesk',sans-serif;display:flex;align-items:center;gap:10px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.rv{font-family:'Space Grotesk',sans-serif;font-weight:600;color:#fff;font-size:14px}
+.rv-orig{font-size:11px;color:rgba(160,160,168,.35);text-decoration:line-through;margin-right:6px;display:none}
+.res-total{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;background:rgba(255,255,255,.05);border-radius:10px;border:1px solid rgba(160,160,168,.1)}
+.rtl{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(160,160,168,.4)}
+.rtv{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:var(--red)}
+.rt-orig{font-size:16px;color:rgba(160,160,168,.3);text-decoration:line-through;margin-right:10px;display:none}
+
+/* CONDICIONES */
+.condiciones{background:var(--white);border-radius:12px;padding:20px 28px}
+.cond-title{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);margin-bottom:12px}
+.cond-list{display:flex;flex-direction:column;gap:8px}
+.cond-item{display:flex;gap:10px;font-size:12px;color:var(--text2);line-height:1.5}
+.cond-dash{color:var(--red);font-weight:700;flex-shrink:0}
+.cond-item strong{color:var(--text);font-weight:600}
+
+/* FOOTER */
+.footer{background:var(--white);border-radius:12px;padding:18px 30px;display:flex;justify-content:space-between;align-items:center}
+.footer-mark{display:flex;align-items:baseline;gap:1px;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:3px}
+.footer-mark .l-silver{color:var(--silver)}
+.footer-mark .l-red{color:var(--red)}
+.footer-mark .l-blue{color:#4A7BAF}
+.footer-contact{text-align:right;font-size:11.5px;color:var(--text2);line-height:1.9}
+.footer-contact strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px}
+.footer-contact a{color:var(--blue);text-decoration:none}
+
+@media print{
+  body{background:white;padding:16px}
+  .factura,.cliente-block,.condiciones,.footer{box-shadow:none;border:1px solid #e0e0e8}
+  .disc-wrap{display:none}
+  .price-input{border:none!important;background:transparent!important;cursor:default}
+  .page{gap:20px}
+  .brand-header,.resumen{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="brand-header">
+  <div>
+    <div class="wordmark">
+      <span class="l-silver">F</span><span class="l-silver">I</span><span class="l-red">X</span><span class="l-silver">O</span><span class="l-silver">R</span><span class="l-blue">I</span><span class="l-blue">A</span>
+    </div>
+    <div class="tagline">Consultoría y Desarrollo de Agentes e IA</div>
+  </div>
+  <div class="hdr-right">
+    <div class="hdr-doc">Cotización de Servicios</div>
+    <div class="hdr-ref">COT · SAGEST · 2025 · 001</div>
+    <div class="hdr-date">Mayo 2025</div>
+    <div class="hdr-contact">
+      <span>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.22 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        312-436-5854 · 321-547-6807
+      </span>
+      <span>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        contacto@fixoria.com.co
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENTE -->
+<div class="cliente-block">
+  <div class="cb-title">Información del proyecto</div>
+  <div class="cb-row">
+    <span class="cb-label">Cliente</span>
+    <span class="cb-value">Mercy J. Valencia C. &amp; Edison Ospina G.</span>
+  </div>
+  <div class="cb-row">
+    <span class="cb-label">Institución</span>
+    <span class="cb-value">Universidad ICESI — Maestría GTH</span>
+  </div>
+  <div class="cb-row">
+    <span class="cb-label">Sistema</span>
+    <span class="cb-value accent">SAGEST</span>
+  </div>
+  <div class="cb-row">
+    <span class="cb-label">Descripción</span>
+    <span class="cb-value">Sistema de Aprendizaje y GESTión Organizacional</span>
+  </div>
+</div>
+
+<div class="nota">
+  <strong>Alcance:</strong> Esta cotización contempla tres componentes independientes del proyecto SAGEST. Cada ítem corresponde al trabajo efectivamente realizado y entregado, incluyendo entregables adicionales no contemplados en el alcance inicial acordado.
+</div>
+
+<!-- FACTURA 1 -->
+<div class="factura" data-invoice="1">
+  <div class="fh f1">
+    <div>
+      <div class="fn">Factura No. 001</div>
+      <div class="ftitle">Desarrollo web — Sistema SAGEST</div>
+      <div class="fdesc">Diseño, implementación y despliegue del sistema funcional completo</div>
+      <span class="fbadge rb">Desarrollo de software</span>
+    </div>
+    <div style="text-align:right">
+      <div class="disc-wrap">
+        <span class="disc-label">Descuento</span>
+        <input class="disc-input" type="number" min="0" max="50" value="0" data-inv="1">
+        <span>%</span>
+      </div>
+      <div class="disc-badge" id="badge1"></div>
+    </div>
+  </div>
+  <div class="fb">
+    <table>
+      <thead><tr><th style="width:54%">Descripción</th><th>Estado</th><th style="text-align:right">Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Diseño y desarrollo del mockup inicial<span class="in">Pantalla diagnóstico + facilitador — alcance original pactado</span></td><td><span class="tag-b">Acordado</span></td><td class="price-cell"><input class="price-input" data-inv="1" value="700000" type="number"></td></tr>
+        <tr><td>Implementación funcional Stage 1 y Stage 2<span class="in">Flujo diagnóstico completo D1–D8, lógica de navegación</span></td><td><span class="tag-a">Adicional</span></td><td class="price-cell"><input class="price-input" data-inv="1" value="800000" type="number"></td></tr>
+        <tr><td>Motor de recomendaciones + código SAG-XXXX<span class="in">Sistema de lookup dimensional, generación de código único</span></td><td><span class="tag-a">Adicional</span></td><td class="price-cell"><input class="price-input" data-inv="1" value="750000" type="number"></td></tr>
+        <tr><td>Integración backend — Google Sheets + AppScript<span class="in">Recepción, almacenamiento y consulta de diagnósticos</span></td><td><span class="tag-a">Adicional</span></td><td class="price-cell"><input class="price-input" data-inv="1" value="450000" type="number"></td></tr>
+        <tr><td>Dashboard del facilitador funcional<span class="in">KPIs, gráficas, tabla de encuestados, toggle real/demo</span></td><td><span class="tag-a">Adicional</span></td><td class="price-cell"><input class="price-input" data-inv="1" value="400000" type="number"></td></tr>
+        <tr><td>Guía personalizada con lookup por código<span class="in">Recomendaciones profundas + planes de acción 30/90 días</span></td><td><span class="tag-a">Adicional</span></td><td class="price-cell"><input class="price-input" data-inv="1" value="300000" type="number"></td></tr>
+        <tr><td>Botón WhatsApp + funcionalidades UI<span class="in">Integración de contacto directo en el flujo del diagnóstico</span></td><td><span class="tag-a">Adicional</span></td><td class="price-cell"><input class="price-input" data-inv="1" value="100000" type="number"></td></tr>
+        <tr><td>Despliegue en producción<span class="in">Vercel + GitHub + URL pública activa</span></td><td><span class="tag-a">Adicional</span></td><td class="price-cell"><input class="price-input" data-inv="1" value="150000" type="number"></td></tr>
+      </tbody>
+    </table>
+    <div class="ft-row">
+      <span class="ft-label">Total Factura 001</span>
+      <span class="ft-orig" id="orig1"></span>
+      <span class="ft-val fv-red" id="total1">$3.650.000</span>
+    </div>
+  </div>
+</div>
+
+<!-- FACTURA 2 -->
+<div class="factura" data-invoice="2">
+  <div class="fh f2">
+    <div>
+      <div class="fn">Factura No. 002</div>
+      <div class="ftitle">Consultoría académica — Proyecto de tesis</div>
+      <div class="fdesc">Apoyo en investigación, construcción documental y validación del sistema</div>
+      <span class="fbadge bb">Consultoría especializada</span>
+    </div>
+    <div style="text-align:right">
+      <div class="disc-wrap">
+        <span class="disc-label">Descuento</span>
+        <input class="disc-input" type="number" min="0" max="50" value="0" data-inv="2">
+        <span>%</span>
+      </div>
+    </div>
+  </div>
+  <div class="fb">
+    <table>
+      <thead><tr><th style="width:54%">Descripción</th><th>Entregable</th><th style="text-align:right">Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Complemento y apoyo OE2 — segunda mitad del instrumento<span class="in">Diseño dimensional D1–D8, niveles de análisis, justificación metodológica</span></td><td>Documento</td><td class="price-cell"><input class="price-input" data-inv="2" value="400000" type="number"></td></tr>
+        <tr><td>Apoyo capítulo 3 — metodología de investigación<span class="in">Estructura DEXPLOS, diseño muestral, análisis cuanti y cualitativo</span></td><td>Documento</td><td class="price-cell"><input class="price-input" data-inv="2" value="350000" type="number"></td></tr>
+        <tr><td>Diseño preguntas de encuesta y entrevista<span class="in">Instrumento validado — 32 ítems del sistema</span></td><td>Instrumento</td><td class="price-cell"><input class="price-input" data-inv="2" value="250000" type="number"></td></tr>
+        <tr><td>Diagramas técnicos del sistema<span class="in">Flujo SAGEST + motor de selección de recomendaciones</span></td><td>Gráficos</td><td class="price-cell"><input class="price-input" data-inv="2" value="80000" type="number"></td></tr>
+        <tr><td>Reuniones de validación y explicación del sistema<span class="in">2 sesiones de presentación, revisión y ajuste</span></td><td>Sesiones</td><td class="price-cell"><input class="price-input" data-inv="2" value="180000" type="number"></td></tr>
+      </tbody>
+    </table>
+    <div class="ft-row">
+      <span class="ft-label">Total Factura 002</span>
+      <span class="ft-orig" id="orig2"></span>
+      <span class="ft-val fv-blue" id="total2">$1.260.000</span>
+    </div>
+  </div>
+</div>
+
+<!-- FACTURA 3 -->
+<div class="factura" data-invoice="3">
+  <div class="fh f3">
+    <div>
+      <div class="fn">Factura No. 003</div>
+      <div class="ftitle">Lógica e instrumento diagnóstico</div>
+      <div class="fdesc">Diseño y adaptación de la lógica del instrumento al sistema web</div>
+      <span class="fbadge ob">Diseño de instrumento</span>
+    </div>
+    <div style="text-align:right">
+      <div class="disc-wrap">
+        <span class="disc-label">Descuento</span>
+        <input class="disc-input" type="number" min="0" max="50" value="0" data-inv="3">
+        <span>%</span>
+      </div>
+    </div>
+  </div>
+  <div class="fb">
+    <table>
+      <thead><tr><th style="width:54%">Descripción</th><th>Componente</th><th style="text-align:right">Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Diseño lógica de scoring multidimensional<span class="in">8 dimensiones × 4 niveles × 3 clasificaciones — Bajo/Medio/Alto</span></td><td>Algoritmo</td><td class="price-cell"><input class="price-input" data-inv="3" value="450000" type="number"></td></tr>
+        <tr><td>Construcción repositorio de recomendaciones<span class="in">96+ bloques fundamentados en literatura OE1 y hallazgos OE2</span></td><td>Repositorio</td><td class="price-cell"><input class="price-input" data-inv="3" value="800000" type="number"></td></tr>
+        <tr><td>Diseño preguntas Stage 1 y Stage 2<span class="in">32 ítems validados: Likert 1–5, binarios y estratégicos</span></td><td>Instrumento</td><td class="price-cell"><input class="price-input" data-inv="3" value="350000" type="number"></td></tr>
+        <tr><td>Adaptación hallazgos OE2 al motor de recomendaciones<span class="in">Calibración del sistema según resultados empíricos de la muestra</span></td><td>Análisis</td><td class="price-cell"><input class="price-input" data-inv="3" value="300000" type="number"></td></tr>
+      </tbody>
+    </table>
+    <div class="ft-row">
+      <span class="ft-label">Total Factura 003</span>
+      <span class="ft-orig" id="orig3"></span>
+      <span class="ft-val fv-brown" id="total3">$1.900.000</span>
+    </div>
+  </div>
+</div>
+
+<!-- RESUMEN -->
+<div class="resumen">
+  <div class="res-title">Resumen de inversión total — Proyecto SAGEST</div>
+  <div class="res-rows">
+    <div class="res-row">
+      <span class="rl"><span class="dot" style="background:var(--red)"></span>Factura 001 — Desarrollo web del sistema</span>
+      <span><span class="rv-orig" id="sum-orig1"></span><span class="rv" id="sum1">$3.650.000</span></span>
+    </div>
+    <div class="res-row">
+      <span class="rl"><span class="dot" style="background:#4A7BAF"></span>Factura 002 — Consultoría académica</span>
+      <span><span class="rv-orig" id="sum-orig2"></span><span class="rv" id="sum2">$1.260.000</span></span>
+    </div>
+    <div class="res-row">
+      <span class="rl"><span class="dot" style="background:#c49a52"></span>Factura 003 — Lógica e instrumento</span>
+      <span><span class="rv-orig" id="sum-orig3"></span><span class="rv" id="sum3">$1.900.000</span></span>
+    </div>
+  </div>
+  <div class="res-total">
+    <span class="rtl">Inversión total del proyecto</span>
+    <span style="display:flex;align-items:baseline;gap:12px">
+      <span class="rt-orig" id="grand-orig"></span>
+      <span class="rtv" id="grand-total">$6.810.000 COP</span>
+    </span>
+  </div>
+</div>
+
+<!-- CONDICIONES -->
+<div class="condiciones">
+  <div class="cond-title">Condiciones de pago y entrega</div>
+  <div class="cond-list">
+    <div class="cond-item"><span class="cond-dash">—</span><span><strong>Factura 001</strong> — Exigible al momento de la revisión y aceptación del sistema desplegado en Vercel.</span></div>
+    <div class="cond-item"><span class="cond-dash">—</span><span><strong>Factura 002</strong> — Exigible posterior a la entrega formal de los documentos académicos generados.</span></div>
+    <div class="cond-item"><span class="cond-dash">—</span><span><strong>Factura 003</strong> — Exigible antes de la sustentación de tesis. El sistema permanece activo condicionado a esta liquidación.</span></div>
+    <div class="cond-item"><span class="cond-dash">—</span><span><strong>Ajustes menores</strong> — Hasta 2 rondas de correcciones sin costo adicional por factura.</span></div>
+    <div class="cond-item"><span class="cond-dash">—</span><span><strong>Soporte técnico</strong> — 30 días incluidos en Factura 001. Extensiones bajo nueva cotización.</span></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div>
+    <div class="footer-mark">
+      <span class="l-silver">F</span><span class="l-silver">I</span><span class="l-red">X</span><span class="l-silver">O</span><span class="l-silver">R</span><span class="l-blue">I</span><span class="l-blue">A</span>
+    </div>
+    <div style="font-size:9px;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px">Popayán, Colombia · 2025</div>
+  </div>
+  <div class="footer-contact">
+    <strong>Consultoría y Desarrollo de Agentes e IA</strong>
+    312-436-5854 · 321-547-6807<br>
+    <a href="mailto:contacto@fixoria.com.co">contacto@fixoria.com.co</a>
+  </div>
+</div>
+
+</div>
+
+<script>
+const fmt = n => '$' + Math.round(n).toLocaleString('es-CO');
+
+function calcInvoice(invNum) {
+  const inputs = document.querySelectorAll(`.price-input[data-inv="${invNum}"]`);
+  let subtotal = 0;
+  inputs.forEach(i => subtotal += parseFloat(i.value) || 0);
+
+  const discInput = document.querySelector(`.disc-input[data-inv="${invNum}"]`);
+  const disc = Math.min(50, Math.max(0, parseFloat(discInput.value) || 0));
+  const discAmt = subtotal * (disc / 100);
+  const final = subtotal - discAmt;
+
+  const totalEl = document.getElementById(`total${invNum}`);
+  const origEl = document.getElementById(`orig${invNum}`);
+  const sumEl = document.getElementById(`sum${invNum}`);
+  const sumOrigEl = document.getElementById(`sum-orig${invNum}`);
+
+  if (disc > 0) {
+    origEl.textContent = fmt(subtotal);
+    origEl.style.display = 'block';
+    sumOrigEl.textContent = fmt(subtotal);
+    sumOrigEl.style.display = 'inline';
+  } else {
+    origEl.style.display = 'none';
+    sumOrigEl.style.display = 'none';
+  }
+
+  totalEl.textContent = fmt(final);
+  sumEl.textContent = fmt(final);
+
+  calcGrand();
+}
+
+function calcGrand() {
+  const totals = [1,2,3].map(n => {
+    const el = document.getElementById(`total${n}`);
+    const val = el.textContent.replace(/[$\.,\s]/g,'').replace(/\./g,'');
+    return parseInt(el.textContent.replace(/[^0-9]/g,'')) || 0;
+  });
+  const grand = totals.reduce((a,b) => a + b, 0);
+
+  const origTotals = [1,2,3].map(n => {
+    const inputs = document.querySelectorAll(`.price-input[data-inv="${n}"]`);
+    let s = 0; inputs.forEach(i => s += parseFloat(i.value)||0);
+    return s;
+  });
+  const grandOrig = origTotals.reduce((a,b) => a + b, 0);
+
+  const grandEl = document.getElementById('grand-total');
+  const grandOrigEl = document.getElementById('grand-orig');
+
+  grandEl.textContent = fmt(grand) + ' COP';
+
+  if (grand < grandOrig) {
+    grandOrigEl.textContent = fmt(grandOrig) + ' COP';
+    grandOrigEl.style.display = 'inline';
+  } else {
+    grandOrigEl.style.display = 'none';
+  }
+}
+
+// Init
+[1,2,3].forEach(n => {
+  document.querySelectorAll(`.price-input[data-inv="${n}"]`).forEach(input => {
+    // Format display
+    input.addEventListener('focus', function() { this.type = 'number'; });
+    input.addEventListener('blur', function() { calcInvoice(n); });
+    input.addEventListener('input', function() { calcInvoice(n); });
+  });
+  document.querySelector(`.disc-input[data-inv="${n}"]`).addEventListener('input', function() {
+    calcInvoice(n);
+  });
+  calcInvoice(n);
+});
+
+// Format inputs on load - show COP formatted
+document.querySelectorAll('.price-input').forEach(input => {
+  const val = parseFloat(input.value);
+  input.setAttribute('data-orig', val);
+});
+</script>
+</body>
+</html>
