@@ -467,8 +467,6 @@ function toggleDetail() {
   bar.classList.toggle('open');
 }
 
-// Hacer editables las celdas del detalle
-document.querySelectorAll('.dp-table td').forEach(td => { td.contentEditable = 'true'; });
 </script>
 
 <div class="detail-page" id="detail-page">
@@ -527,5 +525,6 @@ document.querySelectorAll('.dp-table td').forEach(td => { td.contentEditable = '
   </div>
 </div>
 
+<script>document.querySelectorAll('.dp-table td').forEach(function(td){td.contentEditable='true'});</script>
 </body>
 </html>
